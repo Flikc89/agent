@@ -1,10 +1,20 @@
 import 'dotenv/config';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
 import chatRoutes from './routes/chatRoutes.js';
 
 const app = express();
+
+// CORS configuration
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || true, // Разрешить все домены по умолчанию, или указать конкретный через .env
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 const limiter = rateLimit({
